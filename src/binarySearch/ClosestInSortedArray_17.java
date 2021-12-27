@@ -20,6 +20,8 @@ public class ClosestInSortedArray_17 {
                 left = mid;
             }
         }
+        long leftdiff = ((long) array[left] - target);
+        long rightdiff = ((long) array[right] - target);
         return (Math.abs(array[left] - target) < Math.abs(array[right] - target)) ? left : right;
     }
 }

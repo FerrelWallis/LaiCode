@@ -5,51 +5,60 @@ import java.util.List;
 
 public class QuickSort_10 {
 
-    public static void main(String[] args) {
-        QuickSort_10 test = new QuickSort_10();
-        test.quickSort(new int[]{388,-304,304,-350,26,366,190,85,468,-321,159,-29,269,360,454,-214,496,-472});
+    //  3 5 1 10 8 7 13 11
+    // 1. pick a pivot
+    // 2. parition the array into 2 part according to the pivot
+    //      smaller pivot larger
+    //  3 5 1 10 8 7 13 11   pivot = 11
+    //                i
+    //             j
+    //  (          ) 11 ( )
+    //  [0, i) : all ele < pivot
+    //  [i, j] : all ele waiting to be check
+    //  (j, size - 2] : all ele >= pivot
 
-    }
+    //1. if array[i] < p => i++
+    //2. if array[j] >= p => j--
+    //3. array[i] >= p && array[j] < p => swap i, j eles then i++, j--
+    //until i > j
+    //swap(array, i, p)
+    //when only 1 ele in range, stop drill down
+    //
 
     public int[] quickSort(int[] array) {
         if (array == null || array.length == 0) {
-            return new int[]{};
+            return array;
         }
-        quickSort(array, 0, array.length - 1);
+        helper(array, 0, array.length - 1);
         return array;
     }
-
-    public void quickSort(int[] array, int left, int right) {
+    public void helper(int[] array, int left, int right) {
         if (left >= right) {
             return;
         }
-        int mid = partition(array, left, right);
-        quickSort(array, left, mid - 1);
-        quickSort(array, mid + 1, right);
-    }
-
-    public int partition(int[] arr, int left, int right) {
-        int pivot = arr[right];
-        int i = 0;
-        int j = right - 1;
+        int pindex = right;
+        int i = left;
+        int j = pindex - 1;
         while (i <= j) {
-            if (arr[i] < pivot) {
+            if (array[i] < array[pindex]) {
                 i++;
-            } else if(arr[j] >= pivot) {
+            } else if (array[j] >= array[pindex]) {
                 j--;
             } else {
-                swap(arr, i++, j--);
+                swap(array, i++, j--);
             }
         }
-        swap(arr, i, right);
-        return i;
+        swap(array, i, pindex);
+        helper(array, left, i - 1);
+        helper(array, i + 1, right);
     }
 
-    public void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+    public void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
+
 
 
 }
